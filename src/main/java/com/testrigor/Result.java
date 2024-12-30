@@ -10,10 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class Result {
@@ -39,10 +36,12 @@ class Result {
 		Response apiResponse = GSON_MAPPER.fromJson(String.valueOf(data), Response.class);
 		List<Person> peopleList = apiResponse.getData();
 
-		List<String> peopleNames = new ArrayList<>();
-		peopleList.forEach(person -> peopleNames.add(person.getName()));
+		Set<String> uniqueNamesSet = peopleList.stream()
+				.map(Person::getName)
+				.collect(Collectors.toSet());
 
-		return peopleNames;
+
+		return new ArrayList<>(uniqueNamesSet);
 	}
 
 	/*
