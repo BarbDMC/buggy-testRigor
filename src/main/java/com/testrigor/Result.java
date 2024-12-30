@@ -1,6 +1,8 @@
 package com.testrigor;
 
 import com.google.gson.Gson;
+import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,8 +31,12 @@ class Result {
 	public static Collection <String> collectUniquePeopleNamesFromApiResponse() throws IOException {
 		String apiRespStr = callPeopleApi();
 
-		Response apiResponse = GSON_MAPPER.fromJson(apiRespStr, Response.class);
+		JSONObject jsonApiResponse = XML.toJSONObject(apiRespStr);
 
+		JSONObject response = jsonApiResponse.getJSONObject("Response");
+		JSONObject data = response.getJSONObject("data");
+
+		Response apiResponse = GSON_MAPPER.fromJson(String.valueOf(data), Response.class);
 		List<Person> peopleList = apiResponse.getData();
 
 		List<String> peopleNames = new ArrayList<>();
