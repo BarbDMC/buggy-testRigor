@@ -29,7 +29,7 @@ class Result {
 	public static Collection <String> collectUniquePeopleNamesFromApiResponse() throws IOException {
 		String apiRespStr = callPeopleApi();
 
-		Response apiResponse = GSON_MAPPER.fromJson(apiResponseStr, Response.class);
+		Response apiResponse = GSON_MAPPER.fromJson(apiRespStr, Response.class);
 
 		List<Person> peopleList = apiResponse.getData();
 
